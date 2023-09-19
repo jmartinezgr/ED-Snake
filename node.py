@@ -17,6 +17,9 @@ class PositionNode:
         # El siguiente nodo en la cola (inicialmente se establece como None).
         self._nextNode = None
 
+        # El nodo anterior en la cola (inicialmente se establece como None).
+        self._previousNode = None
+
     @property
     def row(self):
         """
@@ -57,6 +60,27 @@ class PositionNode:
         """
         self._column = value
 
+    @property
+    def previousNode(self):
+        """
+        Obtiene el nodo anterior en la cola.
+
+        :return: El nodo anterior.
+        :rtype: PositionNode
+        """
+        return self._previousNode
+
+    @previousNode.setter
+    def previousNode(self, node):
+        """
+        Establece el nodo anterior en la cola.
+
+        :param node: El nuevo nodo anterior.
+        :type node: PositionNode
+        """
+        self._previousNode = node
+
+        
     def position(self):
         """
         Obtiene la posición como una tupla (fila, columna) en la cuadrícula.
@@ -65,3 +89,21 @@ class PositionNode:
         :rtype: tuple[int, int]
         """
         return (self._row, self._column)
+    
+if __name__ == '__main__':
+    # Crear nodos de prueba
+    nodo1 = PositionNode(1, 2)
+    nodo2 = PositionNode(3, 4)
+
+    # Establecer el nodo anterior para nodo2
+    nodo2.previousNode = nodo1
+
+    # Imprimir las posiciones de los nodos
+    print("Posición de nodo1:", nodo1.position())
+    print("Posición de nodo2:", nodo2.position())
+
+    # Imprimir el nodo anterior de nodo2
+    if nodo2.previousNode:
+        print("Posición del nodo anterior de nodo2:", nodo2.previousNode.position())
+    else:
+        print("Nodo anterior de nodo2 no está establecido.")
