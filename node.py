@@ -1,58 +1,67 @@
 class PositionNode:
-    def __init__(self, fila, columna):
+    def __init__(self, row, column):
         """
         Constructor de la clase PositionNode.
 
-        :param fila: La fila en la que se encuentra el nodo en el grid.
-        :type fila: int
-        :param columna: La columna en la que se encuentra el nodo en el grid.
-        :type columna: int
+        :param row: La fila en la que se encuentra el nodo en la cuadrícula.
+        :type row: int
+        :param column: La columna en la que se encuentra el nodo en la cuadrícula.
+        :type column: int
         """
-        # Almacena la fila en el grid.
-        self._fila = fila
+        # Almacena la fila en la cuadrícula.
+        self._row = row
 
-        # Almacena la columna en el grid.
-        self._columna = columna
+        # Almacena la columna en la cuadrícula.
+        self._column = column
 
         # El siguiente nodo en la cola (inicialmente se establece como None).
         self._nextNode = None
 
     @property
-    def fila(self):
+    def row(self):
         """
-        Obtiene el valor de la fila en el grid.
+        Obtiene el valor de la fila en la cuadrícula.
 
         :return: El valor de la fila.
         :rtype: int
         """
-        return self._fila
+        return self._row
 
-    @fila.setter
-    def fila(self, valor):
+    @row.setter
+    def row(self, value):
         """
-        Establece el valor de la fila en el grid.
+        Establece el valor de la fila en la cuadrícula.
 
-        :param valor: El nuevo valor de la fila.
-        :type valor: int
+        :param value: El nuevo valor de la fila.
+        :type value: int
         """
-        self._fila = valor
+        self._row = value
 
     @property
-    def columna(self):
+    def column(self):
         """
-        Obtiene el valor de la columna en el grid.
+        Obtiene el valor de la columna en la cuadrícula.
 
         :return: El valor de la columna.
         :rtype: int
         """
-        return self._columna
+        return self._column
 
-    @columna.setter
-    def columna(self, valor):
+    @column.setter
+    def column(self, value):
         """
-        Establece el valor de la columna en el grid.
+        Establece el valor de la columna en la cuadrícula.
 
-        :param valor: El nuevo valor de la columna.
-        :type valor: int
+        :param value: El nuevo valor de la columna.
+        :type value: int
         """
-        self._columna = valor
+        self._column = value
+
+    def position(self):
+        """
+        Obtiene la posición como una tupla (fila, columna) en la cuadrícula.
+
+        :return: La posición como una tupla.
+        :rtype: tuple[int, int]
+        """
+        return (self._row, self._column)
