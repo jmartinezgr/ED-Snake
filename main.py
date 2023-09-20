@@ -15,12 +15,12 @@ frameabajo.pack(side='bottom') #se ubica abajo
 framearriba.pack(expand=True) #se ubica en el resto de la ventana(arriba)
 
 
-
+labels = [[None for _ in range(13)] for _ in range(13)]
 #ciclo para que se creen las etiquetas
 for i in range(13):
     for j in range(13):
-        label = tk.Label(framearriba, text=f"{i},{j}", width=2, height=1) #width y height es el tamaño por pixel en alto y ancho(queda mas o menos cuadrado)  relief='raised' para ver los bordes
-        label.grid(row=i, column=j) #posiciones
+        labels[i][j] = tk.Label(framearriba, text=f"{i},{j}", width=2, height=1) #width y height es el tamaño por pixel en alto y ancho(queda mas o menos cuadrado)  relief='raised' para ver los bordes
+        labels[i][j].grid(row=i, column=j) #posiciones
 
 
 botonW=tk.Button(frameabajo,text='W',width=6, height=3,command = lambda: mover_arriba()) #width ancho, height alto, está en el frame de abajo
