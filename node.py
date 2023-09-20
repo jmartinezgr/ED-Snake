@@ -90,10 +90,37 @@ class PositionNode:
         """
         return (self._row, self._column)
     
+    def __add__ (self, other):
+        """
+        Resta dos nodos y devuelve un nuevo nodo con la diferencia de coordenadas.
+
+        :param other: El otro nodo que se va a restar.
+        :type other: PositionNode
+        :return: Un nuevo nodo con la diferencia de coordenadas.
+        :rtype: PositionNode
+        """
+        return PositionNode(self._row + other._row, self._column + other._column)
+    
+    def __eq__(self,other):
+        """
+        Compara si las posiciones de dos nodos son iguales y devuelve true si ambas filas y ambas columnas son iguales
+
+        :param other: El otro nodo que se va a comparar.
+        :type other: PositionNode.
+        :return: El valor booleano de igualdad entre los nodos
+        :rtype: bool        
+
+        """
+        return self._row == other._row and self._column == other._column
+    
+    
 if __name__ == '__main__':
     # Crear nodos de prueba
     nodo1 = PositionNode(1, 2)
     nodo2 = PositionNode(3, 4)
+
+    # Probamos la suma de dos nodos
+    print((nodo1+nodo2).position())
 
     # Establecer el nodo anterior para nodo2
     nodo2.previousNode = nodo1

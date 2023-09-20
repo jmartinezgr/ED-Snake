@@ -65,7 +65,7 @@ class LinkedList:
             self._tail = new_node
         else:
             new_node.previousNode = self._tail
-            self._tail._nextNode = new_node  # Corregir aquí
+            self._tail._nextNode = new_node
             self._tail = new_node
 
     def get_positions(self):
@@ -79,7 +79,7 @@ class LinkedList:
         current_node = self._head
         while current_node is not None:
             positions.append(current_node.position())
-            current_node = current_node._nextNode  # Corregir aquí
+            current_node = current_node._nextNode
         return positions
 
     def insert_at(self, node, index):
@@ -100,23 +100,63 @@ class LinkedList:
         if index == 0:
             # Insertar al principio
             node._nextNode = self._head
-            self._head._previousNode = node  # Corregir aquí
+            self._head._previousNode = node
             self._head = node
             if self._tail is None:
                 self._tail = node
         else:
             while current_node is not None and current_index < index:
-                current_node = current_node._nextNode  # Corregir aquí
+                current_node = current_node._nextNode
                 current_index += 1
 
             if current_node is None and current_index < index:
                 raise ValueError("El índice está fuera de rango")
 
-            node._previousNode = current_node._previousNode  # Corregir aquí
+            node._previousNode = current_node._previousNode
             node._nextNode = current_node
             if current_node._previousNode is not None:
-                current_node._previousNode._nextNode = node  # Corregir aquí
-            current_node._previousNode = node  # Corregir aquí
+                current_node._previousNode._nextNode = node
+            current_node._previousNode = node
+
+    def remove_at(self, index):
+        """
+        Elimina el nodo en una posición específica de la lista.
+
+        :param index: La posición del nodo que se va a eliminar.
+        :type index: int
+        """
+        if index < 0:
+            raise ValueError("El índice debe ser mayor o igual a 0")
+
+        current_node = self._head
+        current_index = 0
+
+        if index == 0:
+            # Eliminar el primer nodo
+            if self._head is not None:
+                self._head = self._head._nextNode
+                if self._head is not None:
+                    self._head._previousNode = None
+                else:
+                    self._tail = None
+        else:
+            while current_node is not None and current_index < index:
+                current_node = current_node._nextNode
+                current_index += 1
+
+            if current_node is None and current_index < index:
+                raise ValueError("El índice está fuera de rango")
+
+            if current_node._previousNode is not None:
+                current_node._previousNode._nextNode = current_node._nextNode
+            if current_node._nextNode is not None:
+                current_node._nextNode._previousNode = current_node._previousNode
+
+            if current_node == self._head:
+                self._head = current_node._nextNode
+
+            if current_node == self._tail:
+                self._tail = current_node._previousNode
 
 if __name__ == '__main__':
     lista = LinkedList()
@@ -136,3 +176,10 @@ if __name__ == '__main__':
     posiciones = lista.get_positions()
 
     print("Posiciones de los nodos después de la inserción:", posiciones)
+
+    # Eliminar el nodo en la posición 1
+    lista.remove_at(1)
+
+    posiciones = lista.get_positions()
+
+    print("Posiciones de los nodos después de la eliminación:", posiciones)
