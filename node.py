@@ -61,9 +61,29 @@ class PositionNode:
         self._column = value
 
     @property
+    def nextNode(self):
+        """
+        Obtiene el nodo siguiente relacionado al nodo actual.
+
+        :return: El nodo siguiente.
+        :rtype: PositionNode
+        """
+        return self._nextNode
+    
+    @nextNode.setter
+    def nextNode(self, node):
+        """
+        Establece el nodo siguiente relacionado al nodo actual.
+
+        :param node: El nuevo nodo anterior.
+        :type node: PositionNode
+        """
+        self._nextNode = node
+
+    @property
     def previousNode(self):
         """
-        Obtiene el nodo anterior en la cola.
+        Obtiene el nodo anterior relacionado al nodo actual.
 
         :return: El nodo anterior.
         :rtype: PositionNode
@@ -79,7 +99,6 @@ class PositionNode:
         :type node: PositionNode
         """
         self._previousNode = node
-
         
     def position(self):
         """
