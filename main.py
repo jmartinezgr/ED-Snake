@@ -2,13 +2,13 @@ import tkinter as tk
 
 ventana=tk.Tk() #ventana principal
 ventana.title('Snake') #nombre de la ventana
-ventana.geometry('400x400') #tamaño de la ventana anchoxalto
+ventana.geometry('1000x800') #tamaño de la ventana anchoxalto
 ventana.resizable(False,False) #no permite que se ajuste el tamaño de la ventana
 
 
 #se crearon dos contenedores
 frameabajo=tk.Frame(ventana) #se ubican los botones A,S,D,W
-framearriba=tk.Frame(ventana,relief="solid", borderwidth=2) #se va a ubicar la cuadricula, relief el el color del borde y borderwidth el tamaño del borde(simula los limites del juego)
+framearriba=tk.Frame(ventana,relief="solid", borderwidth=1) #se va a ubicar la cuadricula, relief el el color del borde y borderwidth el tamaño del borde(simula los limites del juego)
 
 
 frameabajo.pack(side='bottom') #se ubica abajo
@@ -16,10 +16,11 @@ framearriba.pack(expand=True) #se ubica en el resto de la ventana(arriba)
 
 
 labels = [[None for _ in range(13)] for _ in range(13)]
+
 #ciclo para que se creen las etiquetas
 for i in range(13):
     for j in range(13):
-        labels[i][j] = tk.Label(framearriba, text=f"{i},{j}", width=2, height=1) #width y height es el tamaño por pixel en alto y ancho(queda mas o menos cuadrado)  relief='raised' para ver los bordes
+        labels[i][j] = tk.Label(framearriba, text=f"{i},{j}", borderwidth=1, width=4, height=2, relief="solid") #width y height es el tamaño por pixel en alto y ancho(queda mas o menos cuadrado)  relief='raised' para ver los bordes
         labels[i][j].grid(row=i, column=j) #posiciones
 
 
