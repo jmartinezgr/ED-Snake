@@ -1,7 +1,7 @@
 from linkedList import LinkedList
-from node import PositionNode
+from node import PositionNode as Node
 
-class LinkedQueue:
+class LinkedDequeue:
     def __init__(self):
         """
         Constructor de la clase LinkedQueue.
@@ -9,82 +9,101 @@ class LinkedQueue:
         """
         self._list = LinkedList()
 
-    def is_empty(self):
+    def append(self,row,column):
         """
-        Verifica si la cola está vacía.
-
-        :return: True si la cola está vacía, False en caso contrario.
-        :rtype: bool
-        """
-        return self._list.empty()
-
-    def enqueue(self, row, column):
-        """
-        Agrega un nuevo elemento a la cola.
+        Agrega un elemento a la derecha del dequeue.
 
         :param row: La fila del nuevo elemento.
         :type row: int
         :param column: La columna del nuevo elemento.
         :type column: int
         """
-        self._list.append(row, column)
+        self._list.insert_at(row,column)
 
-    def dequeue(self):
+    def apendleft(self,row,column):
         """
-        Elimina y devuelve el elemento de la cola.
+        Agrega un elemento a la izquierda del dequeue.
+
+        :param row: La fila del nuevo elemento.
+        :type row: int
+        :param column: La columna del nuevo elemento.
+        :type column: int
+        """
+        self._list.insert_at(row,column,0)
+
+    def pop(self):
+        """
+        Elimina y devuelve el elemento mas a la derecha del dequeue.
 
         :return: El elemento eliminado.
         :rtype: tuple[int, int]
         """
-        if self.is_empty():
-            raise IndexError("La cola está vacía")
+        #Obtenemos el nodo a eliminar
+        exNode = self._list.tail
+        #Eliminamos el ultimo nodo
+        self._list.remove_at()
 
-        # Obtenemos el primer elemento de la cola
-        first_element = self._list.get_positions()[0]
+        return exNode.position()
 
-        # Eliminamos el primer elemento de la cola
+    def popleft(self):
+        """
+        Elimina y devuelve el elemento mas a la izquierda del dequeue.
+
+        :return: El elemento eliminado.
+        :rtype: tuple[int, int]
+        """
+        #Obtenemos el nodo a eliminar
+        exNode = self._list.head
+        #Eliminamos el primer nodo
         self._list.remove_at(0)
 
-        return first_element
+        return exNode.position()
+    
+    def peek(self):
+        """
+        Devuelve el elemento mas a la derecha del dequeue.
+
+        :return: El elemento eliminado.
+        :rtype: tuple[int, int]
+        """
+        return self._list.tail.position()
+    
+    def peekleft(self):
+        """
+        Devuelve el elemento mas a la izquierda del dequeue.
+
+        :return: El elemento eliminado.
+        :rtype: tuple[int, int]
+        """
+        return self._list.head.position()
 
     def get_elements(self):
         """
-        Obtiene una lista de tuplas que representan los elementos en la cola.
+        Obtiene una lista de tuplas que representan los elementos en el dequeue.
 
         :return: Lista de tuplas de elementos.
         :rtype: list[tuple[int, int]]
         """
         return self._list.get_positions()
     
-    def move(self,direction):
-        if self.is_empty():
-            raise IndexError("La cola esta vacia")
-        
-        #Obtenemos la cabeza actual de la cola
-        current_head = PositionNode(*self._list.head.position())
-
-        new_head = current_head + direction
-
-        
-
+    
 if __name__ == '__main__':
-    cola = LinkedQueue()
+    cola = LinkedDequeue()
 
-    cola.enqueue(1, 2)
-    cola.enqueue(3, 4)  
-    cola.enqueue(5, 6)
+    n1 = Node(1, 2)
+    n2 = Node(3, 4)
+    n3 = Node(5, 6)
+    cola.append(*n1.position())
+    cola.append(*n2.position())  
+    cola.append(*n3.position())
 
     elementos = cola.get_elements()
 
     print("Elementos en la cola:", elementos)
 
     # Eliminar el elemento de la cola
-    elemento_eliminado = cola.dequeue()
+    elemento_eliminado = cola.pop()
 
     elementos = cola.get_elements()
 
     print("Elementos en la cola después de eliminar uno:", elementos)
-
-    [(1,1),(1,2),(1,3)]
-    [(2,1),(1,1),(1,2)]
-    (1,0)(0,1)(-1,0)(0,-1)
