@@ -3,7 +3,7 @@ import tkinter as tk
 ventana=tk.Tk() #ventana principal
 ventana.title('Snake') #nombre de la ventana
 ventana.geometry('1000x800') #tamaño de la ventana anchoxalto
-ventana.resizable(False,False) #no permite que se ajuste el tamaño de la ventana
+ventana.resizable(True, True) #Se permite que se ajuste el tamaño de la ventana
 
 
 #se crearon dos contenedores
@@ -20,17 +20,17 @@ labels = [[None for _ in range(13)] for _ in range(13)]
 #ciclo para que se creen las etiquetas
 for i in range(13):
     for j in range(13):
-        labels[i][j] = tk.Label(framearriba, text=f"{i},{j}", borderwidth=1, width=4, height=2, relief="solid") #width y height es el tamaño por pixel en alto y ancho(queda mas o menos cuadrado)  relief='raised' para ver los bordes
+        labels[i][j] = tk.Label(framearriba, text=f"{i},{j}", borderwidth=1, width=4, height=2, relief="solid") #width y height es el tamaño por pixel en alto y ancho(queda mas o menos cuadrado)  relief='solid' para ver los bordes
         labels[i][j].grid(row=i, column=j) #posiciones
 
 
-botonW=tk.Button(frameabajo,text='W',width=6, height=3,command = lambda: mover_arriba()) #width ancho, height alto, está en el frame de abajo
+botonW=tk.Button(frameabajo,text='W',width=10, height=5,command = lambda: mover_arriba()) #width ancho, height alto, está en el frame de abajo
 botonW.grid(row=0, column=1) #posicion de los botones dentro del frame
-botonA=tk.Button(frameabajo,text='A',width=6, height=3,command = lambda: mover_izquierda())
+botonA=tk.Button(frameabajo,text='A',width=10, height=5,command = lambda: mover_izquierda())
 botonA.grid(row=1, column=0)
-botonS=tk.Button(frameabajo,text='S',width=6, height=3,command = lambda: mover_abajo())
+botonS=tk.Button(frameabajo,text='S',width=10, height=5,command = lambda: mover_abajo())
 botonS.grid(row=1, column=1)
-botonD=tk.Button(frameabajo,text='D',width=6, height=3,command = lambda: mover_derecha())
+botonD=tk.Button(frameabajo,text='D',width=12, height=5,command = lambda: mover_derecha())
 botonD.grid(row=1, column=2)
 
 def mover_arriba():
