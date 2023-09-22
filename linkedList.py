@@ -10,7 +10,9 @@ class LinkedList:
         self.head.nextNode = Node(7,6)
         self._tail = Node(8,6)
         self.head.nextNode.nextNode = self._tail
-        self._size = 0
+        self.head.nextNode.previousNode = self._head
+        self._tail.previousNode = self.head.nextNode
+        self._size = 3
 
     @property
     def head(self):
@@ -115,7 +117,7 @@ class LinkedList:
                     self._tail.nextNode = None
                 else:
                     self._head = None
-        
+
         # Disminuir el tamaño de la lista
         self._size -= 1
 

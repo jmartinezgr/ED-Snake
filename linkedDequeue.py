@@ -85,8 +85,8 @@ class LinkedDequeue:
         :rtype: list[tuple[int, int]]
         """
         return self._list.get_positions()
-    
-    
+
+
 if __name__ == '__main__':
     cola = LinkedDequeue()
 
