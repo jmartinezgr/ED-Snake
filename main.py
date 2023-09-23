@@ -64,9 +64,9 @@ def mover_derecha():
 
 
 # Enlazar teclas con funciones de movimiento
-ventana.bind('w', snake.move((-1, 0)))
-ventana.bind('a', snake.move((0, -1)))
-ventana.bind('s', snake.move((1, 0)))
-ventana.bind('d', snake.move((0, 1)))
+ventana.bind('w', mover_arriba)
+ventana.bind('a', mover_izquierda)
+ventana.bind('s', mover_abajo)
+ventana.bind('d', mover_derecha)
 
 ventana.mainloop() #muestra7ejecuta la ventana principal y por ende el resto
