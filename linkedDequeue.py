@@ -20,7 +20,7 @@ class LinkedDequeue:
         """
         self._list.insert_at(row,column)
 
-    def apendleft(self,row,column):
+    def appendleft(self,row,column):
         """
         Agrega un elemento a la izquierda del dequeue.
 

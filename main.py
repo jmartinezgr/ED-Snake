@@ -1,5 +1,5 @@
 import tkinter as tk
-from DataStrucutres.snake import Snake
+from snake import Snake
 
 
 ventana=tk.Tk() #ventana principal
@@ -31,7 +31,7 @@ for i in range(13):
         labels[i][j].grid(row=i, column=j) #posiciones
 
  #Inicializar la serpiente 
-snake = Snake(labels)
+snake = Snake()
 
 botonW=tk.Button(frameabajo,text='W',width=10, height=5,command = lambda: snake.move((-1, 0))) #ARRIBA width ancho, height alto, está en el frame de abajo
 botonW.grid(row=0, column=1) #posicion de los botones dentro del frame
@@ -48,5 +48,7 @@ ventana.bind('w', snake.move((-1, 0)))
 ventana.bind('a', snake.move((0, -1)))
 ventana.bind('s', snake.move((1, 0)))
 ventana.bind('d', snake.move((0, 1)))
+
+snake.move(direction=(1,0),eat=snake.eat_apple(()))
 
 ventana.mainloop() #muestra7ejecuta la ventana principal y por ende el resto
