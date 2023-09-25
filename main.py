@@ -1,5 +1,6 @@
 import tkinter as tk
 from snake import Snake
+from tkinter import messagebox
 
 
 ventana=tk.Tk() #ventana principal
@@ -69,4 +70,18 @@ ventana.bind('a', mover_izquierda)
 ventana.bind('s', mover_abajo)
 ventana.bind('d', mover_derecha)
 
-ventana.mainloop() #muestra7ejecuta la ventana principal y por ende el resto
+def ventanainiciar():
+   respuesta = messagebox.showwarning("Iniciar", "INICIAR JUEGO?",icon="question")
+   if respuesta == 'ok':
+     #mover_serpiente() #comando para que inicie a moverse cuando no hay movimeintos.
+     pass
+
+def mostrar_advertencia(text):#se llama desde collision en snake y saca una advertenica al perder de reinciar juego o no
+    respuesta = messagebox.showwarning("PERDISTE", f"{text}.\n¿Quieres reiniciar el juego?", type="yesno")
+    if respuesta == 'yes':
+        ventanainiciar()
+    else:
+        ventana.destroy()
+
+ventana.after(0, lambda: ventanainiciar())
+ventana.mainloop()

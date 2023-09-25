@@ -1,5 +1,6 @@
 from linkedDequeue import LinkedDequeue
 from node import PositionNode as Node
+import main
 import random
 
 class Snake:
@@ -10,7 +11,7 @@ class Snake:
         cuerpo de la serpiente.
         """
         self.__body = LinkedDequeue()
-        self._direcition = (0, 1)
+        self._direcition = (-1, 0)
         self.__define_apple()
 
     def move(self, direction=None):
@@ -87,10 +88,12 @@ class Snake:
         """
         # Se verifica que la cordenada de la cabeza no este fuera del tablero
         if self.__body.peekleft()[0] > 13 or self.__body.peekleft()[0] > 13:
+            main.mostrar_advertencia('¡Has chocado con la pared!')
             return False
 
         # Se verifica que la coordenada de la cabeza no este sobre otra coordenada del cuerpo.
         if self.__body.peekleft() in self.__body.get_elements()[1:]:
+            main.mostrar_advertencia('¡Has chocado con tu cuerpo!')
             return False
 
         return True
