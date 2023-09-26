@@ -49,50 +49,52 @@ botonD.grid(row=1, column=2)
 
 snake=Snake()
 
-def mover_arriba():
-   lista=snake.move((-1, 0)) #devuelve false o tupla(lista,posicion manzana)
-   if lista is not False:
-      tablero(lista)
-      #ventana.after(200,snake.move())
+def comprobar(lista):
+   if isinstance(lista,bool):
+      mostrar_advertencia('¡Te has chocado con tu cuerpo¡')
+      #if lista=='cuerpo':
+         #mostrar_advertencia('¡Te has chocado con tu cuerpo¡')
+      #elif lista=='pared':
+         #mostrar_advertencia('¡Te has chocado con la pared')
+
    else:
-      mostrar_advertencia('¡Te has chocado con tu propio cuerpo!')
+      tablero(lista)
+      #if lista=='cuerpo':
+       #  mostrar_advertencia('¡Te has chocado con tu propio cuerpo!')
+      #elif lista=='pared':
+       #  mostrar_advertencia('¡Te has chocado con la pared!')
+
+def mover_arriba():
+   if snake._direction!=(1,0):
+      lista=snake.move((-1, 0)) #devuelve false o tupla(lista,posicion manzana)
+      comprobar(lista)
+
    ##pintar(lista)
 
 
 def mover_izquierda():
-   lista=snake.move((0,-1))
-   if lista is not False:
-      tablero(lista)
-      #ventana.after(200,snake.move())
-   else:
-      mostrar_advertencia('¡Te has chocado con tu propio cuerpo!')
-   
+   if snake._direction!=(0,1):
+      lista=snake.move((0,-1))
+      comprobar(lista)
 
 
 def mover_abajo():
-   lista=snake.move((1, 0))
-   if lista is not False:
-      tablero(lista)
-      #ventana.after(200,snake.move())
-   else:
-      mostrar_advertencia('¡Te has chocado con tu propio cuerpo!')
+   if snake._direction!=(-1,0):
+      lista=snake.move((1, 0))
+      comprobar(lista)
    
 
 def mover_derecha():
-   lista=snake.move((0, 1))
-   if lista is not False:
-      tablero(lista)
-      #ventana.after(200,snake.move())
-   else:
-      mostrar_advertencia('¡Te has chocado con tu propio cuerpo!')
-   
+   if snake._direction!=(0,-1):
+      lista=snake.move((0, 1))
+      comprobar(lista)
 
 
 # Enlazar teclas con funciones de movimiento
-ventana.bind('<W>', mover_arriba)
-ventana.bind('<A>', mover_izquierda)
-ventana.bind('<S>', mover_abajo)
-ventana.bind('<D>', mover_derecha)
+ventana.bind('<Up>', lambda event: mover_arriba())
+ventana.bind('<Left>', lambda event: mover_izquierda())
+ventana.bind('<Down>', lambda event: mover_abajo())
+ventana.bind('<Right>', lambda event: mover_derecha())
 
 def ventanainiciar():
    respuesta = messagebox.showwarning("Iniciar", "INICIAR JUEGO?",icon="question")
@@ -118,13 +120,13 @@ def tablero(tupla):
 
    labels[posicion_manzana[0]][posicion_manzana[1]].config(text='', bg='black')
 
-def reiniciar():
-   snake = Snake()
 
 def mostrar_advertencia(text):#se llama desde collision en snake y saca una advertenica al perder de reinciar juego o no
     respuesta = messagebox.showwarning("PERDISTE", f"{text}.\n¿Quieres reiniciar el juego?", type="yesno")
     if respuesta == 'yes':
-        ventanainiciar()
+        global snake
+        snake = Snake()
+        tablero(snake.move())
     else:
         ventana.destroy()
 
