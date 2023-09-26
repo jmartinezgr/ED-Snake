@@ -42,7 +42,14 @@ class Snake:
             else:
                 self.__define_apple()
 
-        return (self.__body.get_elements(),self._apple) if self.__collision() else False
+        if self.__collision() == True:
+            return (self.__body.get_elements(),self._apple)  
+        
+        if self.__collision() == "cuerpo":
+            return "cuerpo"
+        
+        if self.__collision() == "pared":
+            return "pared"
 
     def __define_apple(self):
         """
@@ -97,14 +104,11 @@ class Snake:
         """
         # Se verifica que la cordenada de la cabeza no este fuera del tablero
         if not 0 <= self.__body.peekleft()[0] < 13 or not 0 <= self.__body.peekleft()[1] < 13:
-            #main.mostrar_advertencia('¡Has chocado con la pared!') #ejecuta la advertencia
-            return False
+            return "pared"
 
         # Se verifica que la coordenada de la cabeza no este sobre otra coordenada del cuerpo.
-        #print(self.__body.get_elements())
         if self.__body.peekleft() in self.__body.get_elements()[1:]:
-            #main.mostrar_advertencia('¡Has chocado con tu cuerpo!')
-            return False
+            return "cuerpo"
 
         return True
 
