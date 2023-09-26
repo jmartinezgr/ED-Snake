@@ -1,7 +1,6 @@
 import tkinter as tk
 from snake import Snake
 from tkinter import messagebox
-import linkedDequeue
 
 
 ventana=tk.Tk() #ventana principal
@@ -95,6 +94,10 @@ ventana.bind('<Up>', lambda event: mover_arriba())
 ventana.bind('<Left>', lambda event: mover_izquierda())
 ventana.bind('<Down>', lambda event: mover_abajo())
 ventana.bind('<Right>', lambda event: mover_derecha())
+ventana.bind('w', lambda event: mover_arriba())
+ventana.bind('a', lambda event: mover_izquierda())
+ventana.bind('s', lambda event: mover_abajo())
+ventana.bind('d', lambda event: mover_derecha())
 
 def ventanainiciar():
    respuesta = messagebox.showwarning("Iniciar", "INICIAR JUEGO?",icon="question")
