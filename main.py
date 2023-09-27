@@ -38,13 +38,15 @@ botonD.grid(row=1, column=2)
 snake=Snake()
 
 def comprobar(lista):
-   if isinstance(lista,bool):
-      mostrar_advertencia('¡Te has chocado con tu cuerpo¡')
+   if isinstance(lista,str):
+      if lista=="cuerpo":
+         mostrar_advertencia('¡Te has chocado con tu cuerpo!')
+      if lista=="pared":
+         mostrar_advertencia('¡Te has chocado con la pared!')
       #if lista=='cuerpo':
          #mostrar_advertencia('¡Te has chocado con tu cuerpo¡')
       #elif lista=='pared':
          #mostrar_advertencia('¡Te has chocado con la pared')
-
    else:
       tablero(lista)
       #if lista=='cuerpo':
