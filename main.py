@@ -17,23 +17,12 @@ framearriba=tk.Frame(ventana,relief="solid", borderwidth=1) #se va a ubicar la c
 frameabajo.pack(side='bottom') #se ubica abajo
 framearriba.pack() #se ubica en el resto de la ventana(arriba)
 
-"""
-A=[] #genera matriz de labels para facilitar el acceso y cambio de esta cambié: labels = [[None for _ in range(13)] for _ in range(13)]
-for i in range(13):
-   A.append(None)
-   """
-
 labels= [[None for _ in range(13)] for _ in range(13)] 
-
-"""
-for i in range(13):
-   labels.append(A)
-"""
 
 #ciclo para que se creen las etiquetas
 for i in range(13):
    for j in range(13):
-      labels[i][j] = tk.Label(framearriba, borderwidth=1, width=4, height=2, relief="solid") #width y height es el tamaño por pixel en alto y ancho(queda mas o menos cuadrado)  relief='solid' para ver los bordes
+      labels[i][j] = tk.Label(framearriba, borderwidth=1, width=4, height=2) #width y height es el tamaño por pixel en alto y ancho(queda mas o menos cuadrado)  relief='solid' para ver los bordes
       labels[i][j].grid(row=i, column=j) #posiciones
 
 
@@ -103,7 +92,6 @@ def ventanainiciar():
    respuesta = messagebox.showwarning("Iniciar", "INICIAR JUEGO?",icon="question")
    if respuesta == 'ok':
      tablero(snake.move())
-     #mover_serpiente() #comando para que inicie a moverse cuando no hay movimeintos.
      pass
 
 def tablero(tupla):
@@ -121,17 +109,18 @@ def tablero(tupla):
          else:
             labels[i][j].config(text='', bg='light gray')
 
-   labels[posicion_manzana[0]][posicion_manzana[1]].config(text='', bg='black')
+   if posicion_manzana != (-1,-1):
+      labels[posicion_manzana[0]][posicion_manzana[1]].config(text='', bg='black')
 
 
 def mostrar_advertencia(text):#se llama desde collision en snake y saca una advertenica al perder de reinciar juego o no
-    respuesta = messagebox.showwarning("PERDISTE", f"{text}.\n¿Quieres reiniciar el juego?", type="yesno")
-    if respuesta == 'yes':
-        global snake
-        snake = Snake()
-        tablero(snake.move())
-    else:
-        ventana.destroy()
+   respuesta = messagebox.showwarning("PERDISTE", f"{text}.\n¿Quieres reiniciar el juego?", type="yesno")
+   if respuesta == 'yes':
+      global snake
+      snake = Snake()
+      tablero(snake.move())
+   else:
+      ventana.destroy()
 
 ventana.after(0, lambda: ventanainiciar())
 ventana.mainloop()

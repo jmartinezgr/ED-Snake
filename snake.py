@@ -1,6 +1,5 @@
 from linkedDequeue import LinkedDequeue
 from node import PositionNode as Node
-#import main
 import random
 
 class Snake:
@@ -13,6 +12,7 @@ class Snake:
         self.__body = LinkedDequeue()
         self._direction = (-1, 0)
         self.__define_apple()
+        self._count_apple = 0
 
     def move(self, direction=None):
         """
@@ -40,7 +40,20 @@ class Snake:
             if not eat:
                 self.__body.pop()
             else:
+                #Definimos la manzana como una posicion nula mientras se ejecutan los movimientos requeridos 
+                self._apple = (-1,-1)  
+                #Se define el nuevo numero de movimientos requeridos para que aparezca la manza
+                self._count_apple = random.randint(1,10)-1
+
+            #En cada movimiento se resta uno al contador siempre que el contador no sea -1 ya que significa
+            #que hay una manzana en el mapa que no ha sido comida
+            self._count_apple -= 1 if self._count_apple != -1 else 0
+
+            #Si el contador llega a cero se define una nueva manzana
+            if self._count_apple == 0:
                 self.__define_apple()
+                #Se iguala el contador a -1 hasta que se coman la manzana que hay en el mapa
+                self._count_apple = -1
 
         return (self.__body.get_elements(),self._apple) if self.__collision() else False
 
