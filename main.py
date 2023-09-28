@@ -1,13 +1,13 @@
 import tkinter as tk
 from snake import Snake
 from tkinter import messagebox
-
+import time
 
 ventana=tk.Tk() #ventana principal
 ventana.title('Snake') #nombre de la ventana
 ventana.geometry('1000x700') #tamaño de la ventana anchoxalto
 ventana.resizable(False, False) #Se permite que se ajuste el tamaño de la ventana
-
+ventana.focus_set()
 
 #se crearon dos contenedores
 frameabajo=tk.Frame(ventana) #se ubican los botones A,S,D,W
@@ -36,6 +36,12 @@ botonD=tk.Button(frameabajo,text='D',width=12, height=5,command = lambda: mover_
 botonD.grid(row=1, column=2)
 
 snake=Snake()
+manual_move = False
+tiempo_inicial = time.time()
+
+juego_iniciado = False  # Variable para rastrear si el juego ha comenzado
+# Variable para rastrear si la advertencia ya se mostró
+advertencia_mostrada = False
 
 def comprobar(lista):
    if isinstance(lista,str):
@@ -55,29 +61,37 @@ def comprobar(lista):
        #  mostrar_advertencia('¡Te has chocado con la pared!')
 
 def mover_arriba():
+   global tiempo_inicial   
    if snake._direction!=(1,0):
       lista=snake.move((-1, 0)) #devuelve false o tupla(lista,posicion manzana)
       comprobar(lista)
+      tiempo_inicial = time.time()
 
    ##pintar(lista)
 
 
 def mover_izquierda():
+   global tiempo_inicial
    if snake._direction!=(0,1):
       lista=snake.move((0,-1))
       comprobar(lista)
+      tiempo_inicial = time.time()
 
 
 def mover_abajo():
+   global tiempo_inicial   
    if snake._direction!=(-1,0):
       lista=snake.move((1, 0))
       comprobar(lista)
+      tiempo_inicial = time.time()
    
 
 def mover_derecha():
+   global tiempo_inicial   
    if snake._direction!=(0,-1):
       lista=snake.move((0, 1))
       comprobar(lista)
+      tiempo_inicial = time.time()
 
 
 # Enlazar teclas con funciones de movimiento
@@ -91,10 +105,16 @@ ventana.bind('s', lambda event: mover_abajo())
 ventana.bind('d', lambda event: mover_derecha())
 
 def ventanainiciar():
-   respuesta = messagebox.showwarning("Iniciar", "INICIAR JUEGO?",icon="question")
+   global juego_iniciado
+   respuesta = messagebox.showwarning("Iniciar", "INICIAR JUEGO?", icon="question")
    if respuesta == 'ok':
-     tablero(snake.move())
-     pass
+      juego_iniciado = True
+      global snake
+      snake = Snake()
+      tablero(snake.move())
+
+      # Establecer el foco en la ventana principal después de iniciar el juego
+      ventana.focus_set()
 
 def tablero(tupla):
     
@@ -115,14 +135,42 @@ def tablero(tupla):
       labels[posicion_manzana[0]][posicion_manzana[1]].config(text='', bg='black')
 
 
-def mostrar_advertencia(text):#se llama desde collision en snake y saca una advertenica al perder de reinciar juego o no
-   respuesta = messagebox.showwarning("PERDISTE", f"{text}.\n¿Quieres reiniciar el juego?", type="yesno")
-   if respuesta == 'yes':
-      global snake
-      snake = Snake()
-      tablero(snake.move())
-   else:
-      ventana.destroy()
+def mostrar_advertencia(text): # Se llama desde collision en snake y muestra una advertencia al perder o reiniciar el juego
+   global advertencia_mostrada
+   if not advertencia_mostrada:
+      print("Mostrando advertencia")
+      respuesta = messagebox.showwarning("PERDISTE", f"{text}.\n¿Quieres reiniciar el juego?", type="yesno")
+      advertencia_mostrada = True
+      if respuesta == 'yes':
+         reiniciar_juego()
+      else:
+         ventana.destroy()
+
+def verificar_movimiento():
+   global tiempo_inicial, advertencia_mostrada
+   if juego_iniciado and time.time()-tiempo_inicial >= 0.8 and not advertencia_mostrada:
+      lista = snake.move()
+      comprobar(lista) 
+      tiempo_inicial = time.time()
+   # Programa la próxima verificación después de 1000 milisegundos (1 segundo)
+   ventana.after(800, verificar_movimiento)
+
+def reiniciar_juego():
+   global juego_iniciado, snake, advertencia_mostrada
+   juego_iniciado = False
+   snake = Snake()
+   advertencia_mostrada = False
+   tablero(snake.move())
+   ventana.focus_set()
+   verificar_movimiento()
+
+# ... Tu código anterior ...
 
 ventana.after(0, lambda: ventanainiciar())
+
+# Inicia la primera verificación después de 1 segundo
+ventana.after(800, verificar_movimiento)
+
+ventana.focus_set()
+
 ventana.mainloop()
