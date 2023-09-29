@@ -13,6 +13,7 @@ class Snake:
         self._direction = (-1, 0)
         self.__define_apple()
         self._count_apple = 0
+        self.dont_move = False
 
     def move(self, direction=None):
         """
@@ -23,47 +24,51 @@ class Snake:
         :return: Lista con las posiciones modificadas
         :rtype: list[tuple[int, int]]
         """
-        if direction == None:
-            direction = self._direction
-        else:
-            self._direction = direction
-
-        # Comprobamos si es una direccion prohibida
-        if direction != (-1 * self._direction[0], -1 * self._direction[1]):
-            # Se obtiene el nodo cabeza de la serpiente y se le suma la direccion
-            new_node = Node(*self.__body.peekleft()) + Node(*direction)
-            # Se adiciona la nueva cabeza al cuerpo
-            
-            eat = self.__eat_apple()
-            
-            self.__body.appendleft(*new_node.position())
-            if not eat:
-                self.__body.pop()
+        if not self.dont_move:    
+            if direction == None:
+                direction = self._direction
             else:
-                #Definimos la manzana como una posicion nula mientras se ejecutan los movimientos requeridos 
-                self._apple = (-1,-1)  
-                #Se define el nuevo numero de movimientos requeridos para que aparezca la manza
-                self._count_apple = random.randint(1,10)-1
+                self._direction = direction
 
-            #En cada movimiento se resta uno al contador siempre que el contador no sea -1 ya que significa
-            #que hay una manzana en el mapa que no ha sido comida
-            self._count_apple -= 1 if self._count_apple != -1 else 0
+            # Comprobamos si es una direccion prohibida
+            if direction != (-1 * self._direction[0], -1 * self._direction[1]):
+                # Se obtiene el nodo cabeza de la serpiente y se le suma la direccion
+                new_node = Node(*self.__body.peekleft()) + Node(*direction)
+                # Se adiciona la nueva cabeza al cuerpo
+                
+                eat = self.__eat_apple()
+                
+                self.__body.appendleft(*new_node.position())
+                if not eat:
+                    self.__body.pop()
+                else:
+                    #Definimos la manzana como una posicion nula mientras se ejecutan los movimientos requeridos 
+                    self._apple = (-1,-1)  
+                    #Se define el nuevo numero de movimientos requeridos para que aparezca la manzana
+                    self._count_apple = random.randint(1,10)-1
 
-            #Si el contador llega a cero se define una nueva manzana
-            if self._count_apple == 0:
-                self.__define_apple()
-                #Se iguala el contador a -1 hasta que se coman la manzana que hay en el mapa
-                self._count_apple = -1
+                #En cada movimiento se resta uno al contador siempre que el contador no sea -1 ya que significa
+                #que hay una manzana en el mapa que no ha sido comida
+                self._count_apple -= 1 if self._count_apple != -1 else 0
 
-        if self.__collision() == True:
-            return (self.__body.get_elements(),self._apple)  
-        
-        if self.__collision() == "cuerpo":
-            return "cuerpo"
-        
-        if self.__collision() == "pared":
-            return "pared"
+                #Si el contador llega a cero se define una nueva manzana
+                if self._count_apple == 0:
+                    print('YES')
+                    self.__define_apple()
+                    #Se iguala el contador a -1 hasta que se coman la manzana que hay en el mapa
+                    self._count_apple = -1
 
+            if self.__collision() == True:
+                print(self.__body.get_elements(),self._apple,self._count_apple,)
+                return (self.__body.get_elements(),self._apple)  
+            
+            if self.__collision() == "cuerpo":
+                return "cuerpo"
+            
+            if self.__collision() == "pared":
+                return "pared"
+        else:
+            return [13,13]
     def __define_apple(self):
         """
         Asigna de manera aleatoria una posicion a la manzana, esta posicion
