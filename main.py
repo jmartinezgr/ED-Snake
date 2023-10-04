@@ -6,7 +6,7 @@ import time
 ventana=tk.Tk() #ventana principal
 ventana.title('Snake') #nombre de la ventana
 ventana.geometry('1000x700') #tamaño de la ventana anchoxalto
-ventana.resizable(False, False) #Se permite que se ajuste el tamaño de la ventana
+ventana.resizable(False, False)
 
 #se crearon dos contenedores
 frameabajo=tk.Frame(ventana) #se ubican los botones A,S,D,W
